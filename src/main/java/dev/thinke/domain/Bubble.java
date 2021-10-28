@@ -16,7 +16,7 @@ public class Bubble<T extends Comparable<T>> implements SortingAlg<T> {
         // compare 4, 5
         // swap because 87 is greater than 56
         // restart with n - 1
-        final var n = items.length;
+        final int n = items.length;
         for (int i = n; i > 0; i--) {
 //            int minIndex = i;
 //            T minValue = items[i];

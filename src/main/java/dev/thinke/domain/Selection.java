@@ -4,7 +4,7 @@ public class Selection<T extends Comparable<T>> implements SortingAlg<T> {
 
     @Override
     public T[] sort(final T[] items) {
-        final var n = items.length;
+        final int n = items.length;
         for (int i = 0; i < n; i++) {
             int minIndex = i;
             T minValue = items[i];
