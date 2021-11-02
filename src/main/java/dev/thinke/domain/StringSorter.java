@@ -9,6 +9,7 @@ public class StringSorter implements Sorter<String> {
 
     @Override
     public String[] sort(String[] original) {
-        return sortingStrategy.sort(original);
+        sortingStrategy.sort(original);
+        return original;
     }
 }

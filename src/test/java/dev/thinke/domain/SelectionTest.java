@@ -7,8 +7,9 @@ public class SelectionTest {
 
     @Test
     public void selectionStringSort() {
-        Selection<String> sorter = new Selection<>();
-        String[] items = sorter.sort(new String[]{"me", "testing", "my", "alg"});
+        var sorter = new Selection<String>();
+        var items = new String[]{"me", "testing", "my", "alg"};
+        sorter.sort(items);
         Assertions.assertArrayEquals(new String[]{"alg", "me", "my", "testing"}, items);
     }
 }

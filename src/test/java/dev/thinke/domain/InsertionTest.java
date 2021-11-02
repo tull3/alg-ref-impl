@@ -7,8 +7,9 @@ public class InsertionTest {
 
     @Test
     public void selectionStringSort() {
-        Insertion<String> sorter = new Insertion<>();
-        String[] items = sorter.sort(new String[]{"i", "am", "testing", "b", "b", "b", "b", "b", "glen", "pepper"});
+        var sorter = new Insertion<String>();
+        var items = new String[]{"i", "am", "testing", "b", "b", "b", "b", "b", "glen", "pepper"};
+        sorter.sort(items);
         Assertions.assertArrayEquals(new String[]{"am", "b", "b", "b", "b", "b", "glen", "i", "pepper", "testing"}, items);
     }
 }

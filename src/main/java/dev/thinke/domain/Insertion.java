@@ -3,7 +3,7 @@ package dev.thinke.domain;
 public class Insertion<T extends Comparable<T>> implements SortingAlg<T> {
 
     @Override
-    public T[] sort(final T[] items) {
+    public void sort(final T[] items) {
         final int n = items.length;
         for (int i = 0; i < n; i++) {
             for (int s = i; s > 0; s--) {
@@ -19,6 +19,5 @@ public class Insertion<T extends Comparable<T>> implements SortingAlg<T> {
                 }
             }
         }
-        return items;
     }
 }
