@@ -1,9 +1,9 @@
 package dev.thinke.domain;
 
 public class StringSorter implements Sorter<String> {
-    private final SortingAlg<String> sortingStrategy;
+    private final InPlaceSort<String> sortingStrategy;
 
-    public StringSorter(final SortingAlg<String> sortingStrategy) {
+    public StringSorter(final InPlaceSort<String> sortingStrategy) {
         this.sortingStrategy = sortingStrategy;
     }
 

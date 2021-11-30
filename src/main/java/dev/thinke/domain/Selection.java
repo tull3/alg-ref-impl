@@ -1,6 +1,6 @@
 package dev.thinke.domain;
 
-public class Selection<T extends Comparable<T>> implements SortingAlg<T> {
+public class Selection<T extends Comparable<T>> implements InPlaceSort<T> {
 
     @Override
     public void sort(final T[] items) {

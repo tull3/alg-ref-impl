@@ -7,7 +7,7 @@ public class StringSorterTest {
 
     @Test
     public void sorterTest() {
-        var sortingAlg = new SortingAlg<String>() {
+        var sortingAlg = new InPlaceSort<String>() {
             @Override
             public void sort(String[] original) {}
         };

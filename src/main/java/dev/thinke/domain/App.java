@@ -8,7 +8,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        new Bubble<String>().sort(args);
+        new Shell<String>().sort(args);
         for (String item : args) {
             System.out.println(item);
         }
