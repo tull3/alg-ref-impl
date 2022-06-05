@@ -1,5 +1,6 @@
-package dev.thinke.domain;
+package dev.thinke.domain.sort.alg;
 
+import dev.thinke.domain.sort.alg.Selection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 

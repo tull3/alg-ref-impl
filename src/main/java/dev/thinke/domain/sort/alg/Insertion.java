@@ -1,0 +1,27 @@
+package dev.thinke.domain.sort.alg;
+
+import dev.thinke.domain.sort.type.InPlace;
+
+import java.util.List;
+
+public class Insertion<T extends Comparable<T>> implements InPlace<T> {
+
+    @Override
+    public void sort(final List<T> items) {
+        final int n = items.size();
+        for (int i = 0; i < n; i++) {
+            for (int s = i; s > 0; s--) {
+                int next = s - 1;
+                T nextValue = items.get(next);
+                T currentValue = items.get(s);
+                int comparison = currentValue.compareTo(nextValue);
+                if (comparison < 0) {
+                    items.set(s, nextValue);
+                    items.set(next, currentValue);
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+}

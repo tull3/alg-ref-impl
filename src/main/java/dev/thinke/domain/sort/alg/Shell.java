@@ -1,11 +1,16 @@
-package dev.thinke.domain;
+package dev.thinke.domain.sort.alg;
 
-public class Shell<T extends Comparable<T>> implements InPlaceSort<T> {
+import dev.thinke.domain.sort.type.InPlace;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.List;
+
+public class Shell<T extends Comparable<T>> implements InPlace<T> {
 
     @Override
-    public void sort(final T[] items) {
+    public void sort(@NonNull final List<T> items) {
         final int[] shells = new int[]{6, 3, 1};
-        final int n = items.length;
+        final int n = items.size();
         for (int shell : shells) {
             for (int i = 0; i < n; i++) {
                 for (int s = 0; s < n; s += shell) {
@@ -13,12 +18,12 @@ public class Shell<T extends Comparable<T>> implements InPlaceSort<T> {
                     if (next >= n) {
                         break;
                     }
-                    T nextValue = items[next];
-                    T currentValue = items[s];
+                    T nextValue = items.get(next);
+                    T currentValue = items.get(s);
                     int comparison = currentValue.compareTo(nextValue);
                     if (comparison > 0) {
-                        items[s] = nextValue;
-                        items[next] = currentValue;
+                        items.set(s, nextValue);
+                        items.set(next, currentValue);
                     } else {
                         continue;
                     }
