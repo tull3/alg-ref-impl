@@ -1,13 +1,14 @@
 package dev.thinke.domain.sort.alg;
 
 import dev.thinke.domain.sort.type.InPlace;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 
 public class Selection<T extends Comparable<T>> implements InPlace<T> {
 
     @Override
-    public void sort(final List<T> items) {
+    public List<T> sort(final @NonNull List<T> items) {
         final int n = items.size();
         for (int i = 0; i < n; i++) {
             int minIndex = i;
@@ -24,5 +25,6 @@ public class Selection<T extends Comparable<T>> implements InPlace<T> {
                 items.set(i, minValue);
             }
         }
+        return items;
     }
 }

@@ -1,8 +1,9 @@
 package dev.thinke.domain.sort.alg;
 
-import dev.thinke.domain.sort.alg.Bubble;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 public class BubbleTest {
 
@@ -10,7 +11,8 @@ public class BubbleTest {
     public void selectionStringSort() {
         var sorter = new Bubble<Integer>();
         var items = new Integer[]{5, 2, 6, 87, 23, 56};
-        sorter.sort(items);
-        Assertions.assertArrayEquals(new Integer[]{2, 5, 6, 23, 56, 87}, items);
+        Assertions.assertArrayEquals(
+                new Integer[]{2, 5, 6, 23, 56, 87},
+                sorter.sort(Arrays.asList(items)).toArray());
     }
 }

@@ -2,6 +2,8 @@ package dev.thinke.domain.sort.type;
 
 import java.util.List;
 
+@FunctionalInterface
 public interface InPlace<T extends Comparable<T>> {
-    void sort(List<T> original);
+
+    List<T> sort(List<T> original);
 }

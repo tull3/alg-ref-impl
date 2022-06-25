@@ -10,7 +10,7 @@
 
   <name>alg-ref-impl</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://thinke.dev</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -78,6 +78,7 @@
             <fork>true</fork>
             <showWarnings>true</showWarnings>
             <compilerArgs>
+              <arg>-Awarns</arg>
               <arg>-XDcompilePolicy=simple</arg>
               <arg>-Xplugin:ErrorProne</arg>
               <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
@@ -106,8 +107,7 @@
               <!-- Other annotation processors go here.
 
               If 'annotationProcessorPaths' is set, processors will no longer be
-              discovered on the regular -classpath; see also 'Using Error Prone
-              together with other annotation processors' below. -->
+              discovered on the regular -classpath -->
             </annotationProcessorPaths>
             <annotationProcessors>
               <!-- Add all the checkers you want to enable here -->
@@ -166,6 +166,30 @@
             </execution>
           </executions>
         </plugin>
+
+        <!-- uncomment and update version once plugin supports JDK 17 -->
+<!--        <plugin>-->
+<!--          <groupId>org.apache.maven.plugins</groupId>-->
+<!--          <artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--          <version>3.1.2</version>-->
+<!--          <configuration>-->
+<!--            <configLocation>google_checks.xml</configLocation>-->
+<!--            <encoding>UTF-8</encoding>-->
+<!--            <consoleOutput>true</consoleOutput>-->
+<!--            <failsOnError>true</failsOnError>-->
+<!--            <linkXRef>false</linkXRef>-->
+<!--          </configuration>-->
+<!--          <executions>-->
+<!--            <execution>-->
+<!--              <id>validate</id>-->
+<!--              <phase>validate</phase>-->
+<!--              <goals>-->
+<!--                <goal>check</goal>-->
+<!--              </goals>-->
+<!--            </execution>-->
+<!--          </executions>-->
+<!--        </plugin>-->
+
       </plugins>
     </pluginManagement>
     <plugins>
