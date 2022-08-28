@@ -1,5 +1,6 @@
 package dev.thinke.domain.sort.type;
 
+import dev.thinke.domain.sort.alg.Index;
 import dev.thinke.domain.sort.alg.quick.Shell;
 
 import java.util.List;
@@ -9,12 +10,13 @@ public interface InPlace<T extends Comparable<T>> {
 
     List<T> sort(List<T> original);
 
-    default void swap(int first, int second, List<T> items) {
+    default void swap(Integer first, Integer second, List<T> items) {
         System.out.println("Swapping index " + first + " and " + second);
-        final T firstItem = items.get(first);
-        final T secondItem = items.get(second);
-        items.set(first, secondItem);
-        items.set(second, firstItem);
+        final var index = new Index<>(items);
+        final T firstItem = index.retrieve(first);
+        final T secondItem = index.retrieve(second);
+        index.assign(first, secondItem);
+        index.assign(second, firstItem);
     }
 
     default void swap(final Shell shell, final List<T> items) {
