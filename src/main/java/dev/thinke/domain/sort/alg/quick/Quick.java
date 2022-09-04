@@ -1,6 +1,8 @@
 package dev.thinke.domain.sort.alg.quick;
 
 import dev.thinke.domain.sort.alg.Index;
+import dev.thinke.domain.sort.alg.Range;
+import dev.thinke.domain.sort.alg.Swap;
 import dev.thinke.domain.sort.type.InPlace;
 
 import java.util.*;
@@ -14,7 +16,7 @@ public class Quick<T extends Comparable<T>> implements InPlace<T> {
     }
     @Override
     public List<T> sort(final List<T> items) {
-        sort(items, new Partition(1, items.size()));
+        sort(items, 0, items.size() - 1);
         return items;
     }
 
@@ -35,6 +37,39 @@ public class Quick<T extends Comparable<T>> implements InPlace<T> {
 //        swap(partition.startIndex(), hi, items);
 //        return new Pivot(hi);
 //    }
+
+    public Integer partitionNew(List<T> items, Integer lo, Integer hi) {
+        var left = lo;
+        var cursor = lo;
+        var pivot = hi;
+        T pivotItem = items.get(pivot);
+        while (left <= hi) {
+            if (less(items.get(left), pivotItem)) {
+                swap(left, cursor, items);
+                cursor++;
+            }
+            left++;
+        }
+        swap(pivot, cursor, items);
+        return cursor;
+    }
+
+    public Integer partition(final List<T> items, final Integer lo, final Integer hi) {
+        int cursor = lo;
+        int pivot = hi;
+        for (int i = lo; i < hi; i++) {
+            System.out.println("Comparing index " + i + " with pivot " + pivot);
+            if (items.get(i).compareTo(items.get(pivot)) < 0) {
+                System.out.println("Swapping index " + i + " with cursor " + cursor);
+                swap(i, cursor, items);
+                System.out.println("Incrementing cursor");
+                cursor++;
+            }
+        }
+        System.out.println("Swapping pivot " + pivot + " with cursor " + cursor);
+        swap(pivot, cursor, items);
+        return cursor;
+    }
 
     public Pivot partition(final List<T> items, final Partition partition) {
         final var index = new Index<>(items);
@@ -99,6 +134,14 @@ public class Quick<T extends Comparable<T>> implements InPlace<T> {
         sort(items, new Partition(partition.startIndex(), pivot.index() - 1));
         System.out.println("Right side sort");
         sort(items, new Partition(pivot.index() + 1, partition.endIndex()));
+    }
+
+    private void sort(final List<T> items, final Integer lo, final Integer hi) {
+        if (lo < hi) {
+            final var pivot = partitionNew(items, lo, hi);
+            sort(items, lo, pivot - 1);
+            sort(items, pivot + 1, hi);
+        }
     }
 
     private String buildPrintString(List<T> items) {

@@ -1,10 +1,8 @@
 package dev.thinke.domain;
 
-import dev.thinke.domain.sort.alg.Shell;
+import dev.thinke.domain.sort.alg.shell.Shell;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Hello world!

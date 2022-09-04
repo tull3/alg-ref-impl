@@ -1,4 +1,4 @@
-package dev.thinke.domain.sort.alg;
+package dev.thinke.domain.sort.alg.insertion;
 
 import dev.thinke.domain.sort.type.InPlace;
 import org.checkerframework.checker.nullness.qual.NonNull;

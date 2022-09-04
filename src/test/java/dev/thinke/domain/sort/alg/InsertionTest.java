@@ -1,5 +1,6 @@
 package dev.thinke.domain.sort.alg;
 
+import dev.thinke.domain.sort.alg.insertion.Insertion;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
