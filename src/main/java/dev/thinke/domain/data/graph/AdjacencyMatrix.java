@@ -5,5 +5,5 @@ import java.util.HashMap;
 
 public record AdjacencyMatrix(
         ArrayList<Vertex> vertices,
-        HashMap<String, Integer> keyMap) implements Graph {
+        HashMap<String, Integer> keyMap) {
 }
