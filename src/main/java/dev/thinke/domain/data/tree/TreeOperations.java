@@ -8,44 +8,44 @@ import java.util.function.Consumer;
 public class TreeOperations<K extends Comparable<K>, V> {
 
     // O(h)
-    public V search(LinkedTree linkedTree, K key) {
-        if (linkedTree.data.key().equals(key)) {
-            return linkedTree.data.value();
+    public V search(LinkedTree tree, K key) {
+        if (tree.data.key().equals(key)) {
+            return tree.data.value();
         }
-        if (key.compareTo(linkedTree.left.data.key()) < 0) {
-            return search(linkedTree.left, key);
+        if (key.compareTo(tree.left.data.key()) < 0) {
+            return search(tree.left, key);
         } else {
-            return search(linkedTree.right, key);
+            return search(tree.right, key);
         }
     }
 
-    public V minimum(LinkedTree linkedTree) {
-        if (linkedTree == null) {
+    public V minimum(LinkedTree tree) {
+        if (tree == null) {
             return null;
         }
-        LinkedTree min = linkedTree;
+        LinkedTree min = tree;
         while(min.left != null) {
             min = min.left;
         }
         return min.data.value();
     }
 
-    public V maximum(LinkedTree linkedTree) {
-        if (linkedTree == null) {
+    public V maximum(LinkedTree tree) {
+        if (tree == null) {
             return null;
         }
-        LinkedTree max = linkedTree;
+        LinkedTree max = tree;
         while(max.right != null) {
             max = max.right;
         }
         return max.data.value();
     }
 
-    public void traverse(LinkedTree linkedTree, Consumer<Item<K, V>> consumer) {
-        if (linkedTree != null) {
-            traverse(linkedTree.left, consumer);
-            consumer.accept(linkedTree.data);
-            traverse(linkedTree.right, consumer);
+    public void traverse(LinkedTree tree, Consumer<Item<K, V>> consumer) {
+        if (tree != null) {
+            traverse(tree.left, consumer);
+            consumer.accept(tree.data);
+            traverse(tree.right, consumer);
         }
     }
 
@@ -63,16 +63,10 @@ public class TreeOperations<K extends Comparable<K>, V> {
         }
     }
 
-    public void delete(LinkedTree linkedTree) {
-        LinkedTree parent = linkedTree.parent;
-    }
-
-    private LinkedTree link(UnlinkedTree tree) {
-
-    }
-
-    private UnlinkedTree unlink(LinkedTree linkedTree) {
-
+    public void delete(LinkedTree tree) {
+        var parent = tree.parent;
+        var leftChild = tree.left;
+        var rightChild = tree.right;
     }
 
     private LinkedTree lesser(LinkedTree x, LinkedTree y) {
