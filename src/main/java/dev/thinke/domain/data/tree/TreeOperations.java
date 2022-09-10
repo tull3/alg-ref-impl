@@ -1,60 +1,103 @@
 package dev.thinke.domain.data.tree;
 
-public class TreeOperations<T extends Comparable<T>> {
+import dev.thinke.domain.data.type.Item;
+
+import java.util.List;
+import java.util.function.Consumer;
+
+public class TreeOperations<K extends Comparable<K>, V> {
 
     // O(h)
-    public Tree<T> search(Tree<T> tree, T item) {
-        if (tree.data.equals(item)) {
-            return tree;
+    public V search(LinkedTree linkedTree, K key) {
+        if (linkedTree.data.key().equals(key)) {
+            return linkedTree.data.value();
         }
-        if (item.compareTo(tree.left.data) < 0) {
-            return search(tree.left, item);
+        if (key.compareTo(linkedTree.left.data.key()) < 0) {
+            return search(linkedTree.left, key);
         } else {
-            return search(tree.right, item);
+            return search(linkedTree.right, key);
         }
     }
 
-    public Tree<T> minimum(Tree<T> tree) {
-        if (tree == null) {
+    public V minimum(LinkedTree linkedTree) {
+        if (linkedTree == null) {
             return null;
         }
-        Tree<T> min = tree;
+        LinkedTree min = linkedTree;
         while(min.left != null) {
             min = min.left;
         }
-        return min;
+        return min.data.value();
     }
 
-    public Tree<T> maximum(Tree<T> tree) {
-        if (tree == null) {
+    public V maximum(LinkedTree linkedTree) {
+        if (linkedTree == null) {
             return null;
         }
-        Tree<T> max = tree;
+        LinkedTree max = linkedTree;
         while(max.right != null) {
             max = max.right;
         }
-        return max;
+        return max.data.value();
     }
 
-    public void traverse(Tree<T> tree) {
-        if (tree != null) {
-            traverse(tree.left);
-            // do stuff
-            traverse(tree.right);
+    public void traverse(LinkedTree linkedTree, Consumer<Item<K, V>> consumer) {
+        if (linkedTree != null) {
+            traverse(linkedTree.left, consumer);
+            consumer.accept(linkedTree.data);
+            traverse(linkedTree.right, consumer);
         }
     }
 
-    public void insert(Tree<T> subtree, T item, Tree<T> parent) {
+    public void insert(LinkedTree subtree, Item<K, V> item, LinkedTree parent) {
         if (subtree == null) {
-            subtree = new Tree<T>();
+            subtree = new LinkedTree();
             subtree.parent = parent;
             subtree.data = item;
             return;
         }
-        if (item.compareTo(subtree.data) < 0) {
+        if (item.key().compareTo(subtree.data.key()) < 0) {
             insert(subtree.left, item, subtree);
         } else {
             insert(subtree.right, item, subtree);
         }
+    }
+
+    public void delete(LinkedTree linkedTree) {
+        LinkedTree parent = linkedTree.parent;
+    }
+
+    private LinkedTree link(UnlinkedTree tree) {
+
+    }
+
+    private UnlinkedTree unlink(LinkedTree linkedTree) {
+
+    }
+
+    private LinkedTree lesser(LinkedTree x, LinkedTree y) {
+        int comp = x.data.key().compareTo(y.data.key());
+        if (comp < 0) {
+            y.left = x;
+            x.parent = y;
+            return y;
+        } else {
+            x.right = y;
+            y.parent = x;
+            return x;
+        }
+    }
+
+    private class LinkedTree {
+        public LinkedTree parent;
+        public LinkedTree left;
+        public LinkedTree right;
+        public Item<K, V> data;
+    }
+
+    private class UnlinkedTree {
+        public LinkedTree one;
+        public LinkedTree two;
+        public LinkedTree three;
     }
 }
