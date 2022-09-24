@@ -1,85 +1,68 @@
 package dev.thinke.domain.data.tree;
 
-import dev.thinke.domain.data.type.Item;
+import dev.thinke.domain.data.type.DictionaryItem;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BinaryTreeTest {
 
-    private Tree<String, Integer> treeOne() {
-        Tree<String, Integer> treeOne = new Tree<>();
-        treeOne.data = new Item<>("one", 1);
-        return treeOne;
+    private DictionaryItem<Integer, String> treeOne() {
+        return new DictionaryItem<>(1, "one");
     }
 
-    private Tree<String, Integer> treeTwo() {
-        Tree<String, Integer> treeTwo = new Tree<>();
-        treeTwo.data = new Item<>("two", 2);
-        return treeTwo;
+    private DictionaryItem<Integer, String> treeTwo() {
+        return new DictionaryItem<>(2, "two");
     }
 
-    private Tree<String, Integer> treeThree() {
-        Tree<String, Integer> treeThree = new Tree<>();
-        treeThree.data = new Item<>("three", 3);
-        return treeThree;
+    private DictionaryItem<Integer, String> treeThree() {
+        return new DictionaryItem<>(3, "three");
     }
 
-    private Tree<String, Integer> treeFour() {
-        Tree<String, Integer> treeFour = new Tree<>();
-        treeFour.data = new Item<>("four", 4);
-        return treeFour;
+    private DictionaryItem<Integer, String> treeFour() {
+        return new DictionaryItem<>(4, "four");
     }
 
-    private Tree<String, Integer> treeFive() {
-        Tree<String, Integer> treeFive = new Tree<>();
-        treeFive.data = new Item<>("five", 5);
-        return treeFive;
+    private DictionaryItem<Integer, String> treeFive() {
+        return new DictionaryItem<>(5, "five");
     }
 
-    private Tree<String, Integer> treeSix() {
-        Tree<String, Integer> treeSix = new Tree<>();
-        treeSix.data = new Item<>("six", 6);
-        return treeSix;
+    private DictionaryItem<Integer, String> treeSix() {
+        return new DictionaryItem<>(6, "six");
     }
 
-    @Test
-    public void testDeleteTwo() {
-        var root = treeFour();
-        root.left = treeTwo();
-        root.left.left = treeOne();
-        root.left.right = treeThree();
-        root.right = treeSix();
-        root.right.left = treeFive();
-        var newRoot = new BinaryTree<String, Integer>().delete(root, "two");
-        System.out.println(newRoot.data);
-        System.out.println(newRoot.right.data);
-        System.out.println(newRoot.left.data);
+    private BinaryTree<Integer, String> buildTree() {
+        var root = new BinaryTree<>(treeFour());
+        root.insert(treeTwo().key(), treeTwo().value());
+        root.insert(treeOne().key(), treeOne().value());
+        root.insert(treeThree().key(), treeThree().value());
+        root.insert(treeSix().key(), treeSix().value());
+        root.insert(treeFive().key(), treeFive().value());
+        return root;
     }
 
     @Test
-    public void testDeleteFour() {
-        var root = treeFour();
-        root.left = treeTwo();
-        root.left.left = treeOne();
-        root.left.right = treeThree();
-        root.right = treeSix();
-        root.right.left = treeFive();
-        var newRoot = new BinaryTree<String, Integer>().delete(root, "two");
-        System.out.println(newRoot.data);
-        System.out.println(newRoot.right.data);
-        System.out.println(newRoot.left.data);
+    public void testTreeOne() {
+        var root = buildTree();
+        assertEquals("one", root.min());
+        assertEquals("six", root.max());
+        root.delete(6);
+        assertEquals("five", root.max());
+        root.delete(1);
+        assertEquals("two", root.min());
     }
 
     @Test
-    public void testDeleteSix() {
-        var root = treeFour();
-        root.left = treeTwo();
-        root.left.left = treeOne();
-        root.left.right = treeThree();
-        root.right = treeSix();
-        root.right.left = treeFive();
-        var newRoot = new BinaryTree<String, Integer>().delete(root, "two");
-        System.out.println(newRoot.data);
-        System.out.println(newRoot.right.data);
-        System.out.println(newRoot.left.data);
+    public void testTreeTwo() {
+        var root = buildTree();
+        assertEquals("five", root.search(5));
+        root.delete(5);
+        assertNull(root.search(5));
+        assertEquals("six", root.max());
+        assertEquals("three", root.search(3));
+        root.delete(3);
+        assertNull(root.search(3));
+        assertEquals("one", root.min());
     }
 }
