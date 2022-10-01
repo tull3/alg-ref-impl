@@ -1,10 +1,16 @@
 package dev.thinke.domain.data.table;
 
-public interface Table {
+import dev.thinke.domain.util.Math;
 
-    Object get(Object key);
+public interface Table<T> {
 
-    void put(Object key, Object value);
+    T get(Object key);
+
+    void put(Object key, T value);
 
     int size();
+
+    default int deriveKey(Object key) {
+        return Math.hash(key) % size();
+    }
 }
