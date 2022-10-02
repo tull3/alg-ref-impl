@@ -7,17 +7,17 @@ public class HashTableTest {
 
     @Test
     public void test_get_put() {
-        var table = new StringHashTable(16);
-        table.put("one", "one");
-        table.put("two", "two");
-        table.put("three", "three");
-        table.put("four", "four");
-        table.put("five", "five");
+        var table = new StringHashTable<String>(16);
+        table.insert("one", "one");
+        table.insert("two", "two");
+        table.insert("three", "three");
+        table.insert("four", "four");
+        table.insert("five", "five");
 
-        Assertions.assertEquals("one", table.get("one"));
-        Assertions.assertEquals("two", table.get("two"));
-        Assertions.assertEquals("three", table.get("three"));
-        Assertions.assertEquals("four", table.get("four"));
-        Assertions.assertEquals("five", table.get("five"));
+        Assertions.assertEquals("one", table.search("one"));
+        Assertions.assertEquals("two", table.search("two"));
+        Assertions.assertEquals("three", table.search("three"));
+        Assertions.assertEquals("four", table.search("four"));
+        Assertions.assertEquals("five", table.search("five"));
     }
 }

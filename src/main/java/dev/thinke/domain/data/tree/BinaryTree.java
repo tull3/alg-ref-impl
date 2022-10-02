@@ -3,11 +3,13 @@ package dev.thinke.domain.data.tree;
 import dev.thinke.domain.data.type.DictionaryItem;
 import dev.thinke.domain.data.type.PriorityQueue;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, V> {
 
     private final Tree root;
+    private final AtomicInteger size = new AtomicInteger(0);
 
     public BinaryTree(DictionaryItem<K, V> item) {
         this.root = new Tree();
@@ -69,6 +71,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
                 subtree.left.parent = subtree;
                 subtree.left.data = item;
                 subtree.left.nodeType = NodeType.LEFT;
+                this.size.incrementAndGet();
             } else {
                 insert(subtree.left, item);
             }
@@ -78,6 +81,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
                 subtree.right.parent = subtree;
                 subtree.right.data = item;
                 subtree.nodeType = NodeType.RIGHT;
+                this.size.incrementAndGet();
             } else {
                 insert(subtree.right, item);
             }
@@ -112,6 +116,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
                 tree.data = tree.left.data;
                 tree.left = null;
             }
+            this.size.decrementAndGet();
         }
     }
 
@@ -129,6 +134,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
             } else { // find min in right tree to reassign value here; eventually it'll hit one of the above two cases
                 tree.data = extractMin(tree.right);
             }
+            this.size.decrementAndGet();
             return min;
         } else {
             return extractMin(tree.left);
@@ -168,6 +174,11 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
     @Override
     public V next(K key) {
         return null;
+    }
+
+    @Override
+    public Integer size() {
+        return this.size.get();
     }
 
     private class Tree {
