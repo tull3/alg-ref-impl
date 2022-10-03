@@ -1,5 +1,6 @@
 package dev.thinke.domain.data.tree;
 
+import com.google.common.base.Objects;
 import dev.thinke.domain.data.type.DictionaryItem;
 import dev.thinke.domain.data.type.PriorityQueue;
 
@@ -8,17 +9,22 @@ import java.util.function.Consumer;
 
 public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, V> {
 
-    private final Tree root;
+    private final Tree<K, V> root;
     private final AtomicInteger size = new AtomicInteger(0);
 
-    public BinaryTree(DictionaryItem<K, V> item) {
-        this.root = new Tree();
+    public BinaryTree(final DictionaryItem<K, V> item) {
+        this.root = new Tree<>();
         this.root.data = item;
         this.root.nodeType = NodeType.ROOT;
     }
 
+    public BinaryTree(final Tree<K, V> tree) {
+        this.root = tree;
+        this.root.nodeType = NodeType.ROOT;
+    }
+
     // O(h)
-    private V search(Tree tree, K key) {
+    private V search(final Tree<K, V> tree, final K key) {
         if (tree == null) {
             return null;
         }
@@ -34,29 +40,29 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
         }
     }
 
-    private V minimum(Tree tree) {
+    private V minimum(final Tree<K, V> tree) {
         if (tree == null) {
             return null;
         }
-        Tree min = tree;
+        var min = tree;
         while(min.left != null) {
             min = min.left;
         }
         return min.data.value();
     }
 
-    private V maximum(Tree tree) {
+    private V maximum(final Tree<K, V> tree) {
         if (tree == null) {
             return null;
         }
-        Tree max = tree;
+        var max = tree;
         while(max.right != null) {
             max = max.right;
         }
         return max.data.value();
     }
 
-    private void traverse(Tree tree, Consumer<DictionaryItem<K, V>> consumer) {
+    private void traverse(final Tree<K, V> tree, final Consumer<DictionaryItem<K, V>> consumer) {
         if (tree != null) {
             traverse(tree.left, consumer);
             consumer.accept(tree.data);
@@ -64,10 +70,10 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
         }
     }
 
-    private void insert(Tree subtree, DictionaryItem<K, V> item) {
+    private void insert(final Tree<K, V> subtree, final DictionaryItem<K, V> item) {
         if (item.key().compareTo(subtree.data.key()) < 0) {
             if (subtree.left == null) {
-                subtree.left = new Tree();
+                subtree.left = new Tree<>();
                 subtree.left.parent = subtree;
                 subtree.left.data = item;
                 subtree.left.nodeType = NodeType.LEFT;
@@ -77,7 +83,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
             }
         } else {
             if (subtree.right == null) {
-                subtree.right = new Tree();
+                subtree.right = new Tree<>();
                 subtree.right.parent = subtree;
                 subtree.right.data = item;
                 subtree.nodeType = NodeType.RIGHT;
@@ -88,7 +94,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
         }
     }
 
-    private void delete(Tree tree, K key) {
+    private void delete(final Tree<K, V> tree, K key) {
         if (tree == null) {
             return;
         }
@@ -125,8 +131,7 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
      * @param tree
      * @return
      */
-    private DictionaryItem<K, V> extractMin(Tree tree) {
-        // TODO: clean up parent references
+    private DictionaryItem<K, V> extractMin(final Tree<K, V> tree) {
         if (tree.left == null) { // reached min node in this tree
             var min = tree.data;
             if (tree.right == null) { // this is a leaf; cut it
@@ -141,18 +146,22 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
         }
     }
 
+    protected Tree<K, V> root() {
+        return root;
+    }
+
     @Override
-    public V search(K key) {
+    public V search(final K key) {
         return search(root, key);
     }
 
     @Override
-    public void insert(K key, V value) {
+    public void insert(final K key, final V value) {
         insert(root, new DictionaryItem<>(key, value));
     }
 
     @Override
-    public void delete(K key) {
+    public void delete(final K key) {
         delete(root, key);
     }
 
@@ -167,12 +176,12 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
     }
 
     @Override
-    public V previous(K key) {
+    public V previous(final K key) {
         return null;
     }
 
     @Override
-    public V next(K key) {
+    public V next(final K key) {
         return null;
     }
 
@@ -181,22 +190,16 @@ public class BinaryTree<K extends Comparable<K>, V> implements PriorityQueue<K, 
         return this.size.get();
     }
 
-    private class Tree {
-        public Tree parent;
-        public Tree left;
-        public Tree right;
-        public DictionaryItem<K, V> data;
-
-        public NodeType nodeType;
-
-        public Boolean isLeaf() {
-            return (left == null) && (right == null);
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BinaryTree<?, ?> that = (BinaryTree<?, ?>) o;
+        return Objects.equal(root, that.root);
     }
 
-    private enum NodeType {
-        LEFT,
-        RIGHT,
-        ROOT;
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(root);
     }
 }
